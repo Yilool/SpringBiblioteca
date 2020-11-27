@@ -2,6 +2,9 @@ package com.biblioteca;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
+import java.util.ArrayList;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -25,6 +28,7 @@ class GeBookTest {
 	
 	private Book mockBook;
 	private Page mockPage;
+	private ArrayList<Page> mockPages;
 	
 	@BeforeEach
 	private void init() {
@@ -39,11 +43,15 @@ class GeBookTest {
 	@Test
 	public void obtenerLibroExiste() {
 		mockBook = mock(Book.class);
-		ResponseEntity<?> res = ResponseEntity.status(HttpStatus.OK).body(mockBook);
+		ResponseEntity<?> res;
+		//ResponseEntity.status(HttpStatus.OK).body(mockBook);
 		
 		Mockito.when(mockBookRepository.existsById(3)).thenReturn(true);
+			when(mockBookRepository.findBookById(3)).thenReturn(mockBook);
 
-		assert(res == sut.obtenerLibro(3));
+		res = sut.obtenerLibro(3).get;
+		assert(sut.obtenerLibro(3).getBody().equals(mockBook));
+		//assert(ResponseEntity.status(HttpStatus.OK).body(mockBook).equals(res));
 	}
 
 	@Test
@@ -74,7 +82,9 @@ class GeBookTest {
 		ResponseEntity<?> res = ResponseEntity.status(HttpStatus.OK).body(mockBook);
 		mockPage = mock(Page.class);
 		
-		Mockito.when(mockBook.getPages());
+		Mockito.when(mockBook.getPages()).thenReturn(mockPages);
+			when(mockPageRepository.save(mockPage)).thenReturn(mockPage);
+			when(mockBookRepository.save(mockBook)).thenReturn(mockBook);
 		
 		assert(res == sut.crearLibro(mockBook));
 	}
