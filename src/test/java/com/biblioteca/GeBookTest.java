@@ -1,6 +1,5 @@
 package com.biblioteca;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -9,13 +8,10 @@ import java.util.ArrayList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 
 import com.biblioteca.entity.Book;
 import com.biblioteca.entity.Page;
 import com.biblioteca.repository.BookRepository;
-import com.biblioteca.repository.LibraryRepository;
 import com.biblioteca.repository.PageRepository;
 import com.biblioteca.service.BookService;
 
@@ -43,50 +39,32 @@ class GeBookTest {
 	@Test
 	public void obtenerLibroExiste() {
 		mockBook = mock(Book.class);
-		ResponseEntity<?> res;
-		//ResponseEntity.status(HttpStatus.OK).body(mockBook);
 		
 		Mockito.when(mockBookRepository.existsById(3)).thenReturn(true);
 			when(mockBookRepository.findBookById(3)).thenReturn(mockBook);
 
-		res = sut.obtenerLibro(3).get;
 		assert(sut.obtenerLibro(3).getBody().equals(mockBook));
-		//assert(ResponseEntity.status(HttpStatus.OK).body(mockBook).equals(res));
 	}
 
 	@Test
 	public void obtenerLibroNoExiste() {
 		mockBook = mock(Book.class);
-		ResponseEntity<?> res = ResponseEntity.status(HttpStatus.OK).body("No se encuentra libro con id: " + 3);
 		
 		Mockito.when(mockBookRepository.existsById(3)).thenReturn(false);
 		
-		assert(res == sut.obtenerLibro(3));
+		assert(sut.obtenerLibro(3).getBody().equals("No se encuentra libro con id: " + 3));
 	}
-	
-//	public ResponseEntity<?> obtenerLibro(Integer id) {
-//		ResponseEntity<?> res = null;
-//
-//		if (bookRepository.existsById(id)) {
-//			res = ResponseEntity.status(HttpStatus.OK).body(bookRepository.findBookById(id));
-//		} else {
-//			res = ResponseEntity.status(HttpStatus.NOT_FOUND).body("No se encuentra libro con id: " + id);
-//		}
-//
-//		return res;
-//	}
 	
 	@Test
 	public void crearLibroT() {
 		mockBook = mock(Book.class);
-		ResponseEntity<?> res = ResponseEntity.status(HttpStatus.OK).body(mockBook);
-		mockPage = mock(Page.class);
+		mockPages = new ArrayList<Page>();
 		
 		Mockito.when(mockBook.getPages()).thenReturn(mockPages);
-			when(mockPageRepository.save(mockPage)).thenReturn(mockPage);
+			when(mockPages.forEach(p -> mockPageRepository.save(mockPage))).thenReturn(mockPage);
 			when(mockBookRepository.save(mockBook)).thenReturn(mockBook);
 		
-		assert(res == sut.crearLibro(mockBook));
+		assert(sut.crearLibro(mockBook).getBody().equals(mockBook));
 	}
 	
 //	public ResponseEntity<?> crearLibro(Book b) {
