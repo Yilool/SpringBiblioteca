@@ -42,15 +42,15 @@ class CoBookTest {
 //
 //		return res;
 //	}
-	@Test
-	public void getLibro() {
-		Mockito.when(service.obtenerLibro(3))
-			//.thenThrow("No se encuentra libro con id: " + 3)
-			//.thenReturn(ResponseEntity<Book>.status(HttpStatus.OK).body(new Book());
-		
-		//mockMvc.perform(get(ROOT_PATH+"/3")).andExpect(status().isNotFound());
-		mockMvc.perform(get(ROOT_PATH+"/3")).andExpect(status().isOk());
-	}
+//	@Test
+//	public void getLibro() {
+//		Mockito.when(service.obtenerLibro(3))
+//			//.thenThrow("No se encuentra libro con id: " + 3)
+//			//.thenReturn(ResponseEntity<Book>.status(HttpStatus.OK).body(new Book());
+//		
+//		//mockMvc.perform(get(ROOT_PATH+"/3")).andExpect(status().isNotFound());
+//		mockMvc.perform(get(ROOT_PATH+"/3")).andExpect(status().isOk());
+//	}
 //	@GetMapping(path = "/book/{id}")
 //	public ResponseEntity<?> getBook(@PathVariable Integer id) {
 //		return bookService.obtenerLibro(id);
